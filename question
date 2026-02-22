@@ -1,0 +1,49 @@
+46. Design Last Lap Hero (F1 Race Tracker)
+
+You are building an in-memory tracker for an F1 race with carsCount cars (IDs 0 to carsCount - 1) running lapsCount laps (IDs 0 to lapsCount - 1).
+At the end of each lap, a car reports how much time it took to complete that lap. You must maintain:
+
+Top 3 fastest individual laps recorded so far
+Top 3 drivers with the fastest average lap time so far
+Methods
+void recordLapTiming(int carId, int lapId, int timeTaken)
+carId and lapId will always be valid.
+timeTaken will always be a positive integer.
+Assume each (carId, lapId) is recorded at most once.
+List<String> getTop3FastestLaps()
+Returns up to 3 entries sorted by increasing timeTaken.
+Each entry format: carId-lapId-timeTaken
+If fewer than 3 laps exist, return all of them.
+Tie-breakers when timeTaken is the same:
+Lower carId first
+If still tied, lower lapId first
+List<Integer> getTop3Drivers()
+Consider only drivers that have recorded at least one lap.
+Driver average = totalTime / lapsRecorded (use a precise average, not integer division).
+Round average upto two decimal places using Math.round(value * 100.0) / 100.0
+Returns up to 3 driver IDs sorted by:
+Faster (smaller) average first
+If tied, lower carId first
+Examples
+Example 1: Fewer than 3 laps recorded
+Assume carsCount = 4, lapsCount = 3.
+
+recordLapTiming(1, 0, 70)
+recordLapTiming(2, 0, 69)
+
+getTop3FastestLaps() -> ["2-0-69", "1-0-70"]
+getTop3Drivers()     -> [2, 1]
+Example 2: Ties + averages change over time
+// continue from Example 1
+recordLapTiming(3, 0, 69)
+
+getTop3FastestLaps() -> ["2-0-69", "3-0-69", "1-0-70"]
+getTop3Drivers()     -> [2, 3, 1]
+
+// more laps
+recordLapTiming(2, 1, 71)  // car2 avg = (69+71)/2 = 70.0
+recordLapTiming(3, 1, 65)  // car3 avg = (69+65)/2 = 67.0
+recordLapTiming(1, 1, 66)  // car1 avg = (70+66)/2 = 68.0
+
+getTop3FastestLaps() -> ["3-1-65", "1-1-66", "2-0-69"]
+getTop3Drivers()     -> [3, 1, 2]
